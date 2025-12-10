@@ -1,21 +1,33 @@
-// src/firebase.js
-import { initializeApp } from "firebase/app";
-import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
+// firebase.js
 
-// Your web app's Firebase configuration
+// MODULAR IMPORTS
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+
+// COMPAT IMPORTS (REQUIRED FOR RECAPTCHA)
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+
 const firebaseConfig = {
-  apiKey: "AIzaSyAdCHHgH0n221PF9H2BGqNnz_SkJ5cf7K4",
-  authDomain: "telegramaward-222cb.firebaseapp.com",
-  projectId: "telegramaward-222cb",
-  storageBucket: "telegramaward-222cb.firebasestorage.app",
-  messagingSenderId: "478662276590",
-  appId: "1:478662276590:web:3b77345654f2cce636caff",
-  measurementId: "G-SDBK56V438"
+  apiKey: "AIzaSyAuDRDZrMwSQ-H3gGjM2rz2nxgtavrrzz4",
+  authDomain: "telegramaward-8a4db.firebaseapp.com",
+  projectId: "telegramaward-8a4db",
+  storageBucket: "telegramaward-8a4db.appspot.com",
+  messagingSenderId: "547164549552",
+  appId: "1:547164549552:web:e821b32763beded65d2675"
 };
 
-// Initialize Firebase
+// Initialize Modular Firebase
 const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
 
-// Export functions needed for phone authentication
-export { RecaptchaVerifier, signInWithPhoneNumber };
+// Initialize Compat Firebase (NEEDED for RecaptchaVerifier)
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
+
+export const auth = getAuth(app);
+export const db = getFirestore(app);
+
+// EXPORT compat firebase for Recaptcha
+export { firebase };

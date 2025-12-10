@@ -1,107 +1,86 @@
-import React, { useState } from "react";
-import "./index.css";
+import React from "react";
+import VoteButton from "./VoteButton.jsx";  // ✅ ADD THIS
 import kesem from "./assets/kesem.jpg";
 import kelem from "./assets/kelem.jpg";
 import stem_murad from "./assets/stem_with_murad.jpg";
 import Top from "./assets/Top_students.jpg";
-import python from './assets/python.jpg';
+import python from "./assets/python.jpg";
 
-const initialStem = [
-  { id: 1, name: "STEM with Murad", image: stem_murad, link: "https://t.me/STEMwithMurad", username: "@STEMwithMurad", votes: 10 },
-  { id: 2, name: "KESEM Academy", image: kesem, link: "https://t.me/Kesemacadem", username: "@KesemAcademy", votes: 7 },
-  { id: 3, name: "Keleme", image: kelem, link: "https://t.me/keleme_2013", username: "@Keleme", votes: 5 },
-  { id: 4, name: "Top Students", image: Top, link: "https://t.me/top_students1", username: "@TopStudents", votes: 12 },
-  { id: 5, name: "Code Programmer", image: python, link: "https://t.me/CodeProgrammer", username: "@CodeProgrammer", votes: 1 },
-];
-
-export default function BestEducation() {
-  // Load saved votes from localStorage or default to initialStem
-  const [stem, setStem] = useState(() => {
-    const savedVotes = localStorage.getItem("techVotes");
-    return savedVotes ? JSON.parse(savedVotes) : initialStem;
-  });
-
-  // Load voted competitor ID from user info in localStorage
-  const [votedId, setVotedId] = useState(() => {
-    const savedUser = localStorage.getItem("user");
-    const user = savedUser ? JSON.parse(savedUser) : null;
-    return user?.votes?.tech || null;
-  });
-
-  const handleVote = (item) => {
-    if (!localStorage.getItem("user")) {
-      alert("You must login before voting!");
-      return;
+export default function Tech() {
+  const techChannels = [
+    {
+      id: "1",
+      name: "STEM with Murad",
+      image: stem_murad,
+      link: "https://t.me/STEMwithMurad",
+      username: "@STEMwithMurad"
+    },
+    {
+      id: "2",
+      name: "KESEM Academy",
+      image: kesem,
+      link: "https://t.me/Kesemacadem",
+      username: "@KesemAcademy"
+    },
+    {
+      id: "3",
+      name: "Keleme",
+      image: kelem,
+      link: "https://t.me/keleme_2013",
+      username: "@Keleme"
+    },
+    {
+      id: "4",
+      name: "Top Students",
+      image: Top,
+      link: "https://t.me/top_students1",
+      username: "@TopStudents"
+    },
+    {
+      id: "5",
+      name: "Code Programmer",
+      image: python,
+      link: "https://t.me/CodeProgrammer",
+      username: "@CodeProgrammer"
     }
+  ];
 
-    if (votedId) {
-      alert(`You already voted for: ${stem.find(s => s.id === votedId).name}`);
-      return;
-    }
-
-    const confirmVote = window.confirm(`Vote for "${item.name}"?`);
-    if (!confirmVote) return;
-
-    // Update vote count
-    const updatedStem = stem.map(s => 
-      s.id === item.id ? { ...s, votes: s.votes + 1 } : s
-    );
-
-    setStem(updatedStem);
-    setVotedId(item.id);
-
-    // Save votes for this category in localStorage
-    localStorage.setItem("techVotes", JSON.stringify(updatedStem));
-
-    // Save user's vote in localStorage
-    const savedUser = localStorage.getItem("user");
-    if (savedUser) {
-      const user = JSON.parse(savedUser);
-      user.votes = { ...user.votes, tech: item.id };
-      localStorage.setItem("user", JSON.stringify(user));
-    }
-
-    alert(`You voted for: ${item.name}`);
-  };
+  const CATEGORY = "tech";
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 bg-black min-h-screen text-white gap-6 p-6">
-      {stem.map((item) => (
-        <div
-          key={item.id}
-          className="border border-gray-600 rounded-lg flex flex-col items-center p-4 hover:bg-gray-800 transition-all"
-        >
-          <img
-            className="w-48 h-48 object-cover rounded-full mb-3"
-            src={item.image}
-            alt={item.name}
-          />
-          <div className="text-lg font-semibold">{item.name}</div>
-          <a
-            className="text-blue-400 hover:underline mt-1"
-            href={item.link}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={(e) => e.stopPropagation()}
+    <div className="bg-black min-h-screen flex flex-col items-center p-6 text-white">
+      <h1 className="text-4xl text-center font-bold mb-8 text-indigo-700">🗳️ Vote for Best Tech Channel</h1>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-6xl">
+        {techChannels.map((channel) => (
+          <div
+            key={channel.id}
+            className="border border-gray-700 rounded-2xl p-6 flex flex-col items-center bg-gray-900 hover:scale-105 transition-all shadow-2xl"
           >
-            {item.username}
-          </a>
-          <div className="text-green-400 mt-2">Votes: {item.votes}</div>
-          <button
-            className={`mt-3 px-4 py-2 rounded ${
-              votedId
-                ? item.id === votedId
-                  ? "bg-gray-600 cursor-not-allowed"
-                  : "bg-gray-700 opacity-50 cursor-not-allowed"
-                : "bg-green-600 hover:bg-green-700"
-            }`}
-            onClick={() => handleVote(item)}
-            disabled={!!votedId}
-          >
-            {item.id === votedId ? "Voted ✅" : "Vote"}
-          </button>
-        </div>
-      ))}
+            <img
+              className="w-48 h-48 object-cover rounded-2xl mb-4 shadow-lg"
+              src={channel.image}
+              alt={channel.name}
+            />
+            <h2 className="text-2xl font-bold mb-2 text-center px-4">{channel.name}</h2>
+            <a
+              href={channel.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-400 hover:underline mb-6 font-semibold"
+            >
+              {channel.username}
+            </a>
+            
+            {/* ✅ 5 FREE VOTES + UPGRADE + MongoDB */}
+            <VoteButton 
+              category={CATEGORY}
+              competitorId={channel.id}
+              competitorName={channel.name}
+            />
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

@@ -2,7 +2,7 @@ import React, { useReducer, useState } from "react";
 import meme from './assets/meme.jpg';
 import coding_humor from './assets/dark_humor.jpg';
 import dark_humor from './assets/coding_humor.jpg';
-
+import VoteButton from './VoteButton.jsx'
 const initialMemes = [
   {
     img: meme,
@@ -61,7 +61,7 @@ export default function Meme() {
 
   return (
     <div className="p-6 bg-black min-h-screen text-white flex flex-col items-center">
-      <h1 className="text-4xl font-bold mb-6">Meme Voting</h1>
+      <h1 className="text-4xl text-center font-bold mb-8 text-indigo-700">🗳️ Vote for Best Meme Channel</h1>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {memes.map((meme) => (
@@ -89,18 +89,13 @@ export default function Meme() {
               Votes: {meme.votes}
             </span>
 
-            <button
-              className={`mt-3 px-4 py-2 rounded ${
-                votedMemeId
-                  ? meme.id === votedMemeId
-                    ? "bg-gray-600 cursor-not-allowed"
-                    : "bg-gray-700 opacity-50 cursor-not-allowed"
-                  : "bg-green-600 hover:bg-green-700"
-              }`}
-              disabled={!!votedMemeId}
-            >
-              {meme.id === votedMemeId ? "Voted ✅" : "Vote"}
-            </button>
+         <VoteButton 
+  category="best_meme"        
+  competitorId={meme.id}
+  competitorName={meme.name}
+/>
+
+
           </div>
         ))}
       </div>

@@ -125,7 +125,7 @@ export default function Upgrade() {
             </ul>
             <button
               onClick={() => handleClick(plan)}
-              className={`bg-${plan.color}-500 hover:bg-${plan.color}-400 text-black px-6 py-3 rounded-xl font-semibold transition`}
+              className={`bg-${plan.color}-500 hover:bg-${plan.color}-400 bg-green-400 px-6 py-3 rounded-xl font-semibold transition`}
             >
               {scriptLoaded ? "Subscribe Now" : "Pay via Chapa"}
             </button>

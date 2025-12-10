@@ -9,18 +9,31 @@ import BestEducation from "./Tech.jsx";
 import Entertain from "./entertainment.jsx";
 import Login from "./login.jsx";
 import News from './news.jsx';
-import Rising from './lifestyle.jsx';
+import Rising from './risingstar.jsx';
 import Bot from './bot.jsx';
 import Lifestyle from './lifestyle.jsx';
  import Categorydetail from './categorydetails.jsx';
 import ProtectedRoute from "./protectedRoute.jsx";
 import Logout from './logout.jsx';
-// import Navbar from './Navbar.jsx';
+import { Toaster } from "react-hot-toast";
+ import Navbar from './Navbar.jsx';
 export default function App() {
   return (
     <Router>
+      <Toaster 
+        position="top-center"
+        toastOptions={{
+          style: {
+            background: "#020617",
+            color: "#e5e7eb",
+            borderRadius: "12px",
+            padding: "12px 16px",
+          }
+        }}
+      />
   
       <Routes>
+         
 
         {/* ROOT is now protected */}
         <Route path="/" element={
@@ -35,7 +48,7 @@ export default function App() {
         <Route path="/upgrade" element={<ProtectedRoute><Upgrade /></ProtectedRoute>} />
         <Route path="/best_meme" element={<ProtectedRoute><Memes /></ProtectedRoute>} />
         <Route path="/sports" element={<ProtectedRoute><Sports /></ProtectedRoute>} />
-        <Route path="/education" element={<ProtectedRoute><BestEducation /></ProtectedRoute>} />
+        <Route path="/" element={<ProtectedRoute><BestEducation /></ProtectedRoute>} />
         <Route path="/entertainment" element={<ProtectedRoute><Entertain /></ProtectedRoute>} />
         <Route path="/news" element={<ProtectedRoute><News/></ProtectedRoute>} />
         <Route path="/risingstar" element={<ProtectedRoute><Rising/></ProtectedRoute>} />
